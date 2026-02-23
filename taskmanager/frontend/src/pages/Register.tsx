@@ -11,7 +11,7 @@ export default function Register() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await api.post("/api/register", { username, password });
+            await api.post("/auth/register", { username, password });
             navigate("/login") // After successful registration, redirects to login page
             } catch {
                 setError("Username already taken");  // Username must be unique, passwords dont, they still get different hashes. 

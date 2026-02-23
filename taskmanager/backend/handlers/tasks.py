@@ -33,7 +33,7 @@ class TasksHandler(tornado.web.RequestHandler):
         
         db = SessionLocal()
         try:
-            tasks = db.query(Task).filter(Task.user_id == user_id).all() # gets all tasks that belong to the current user
+            tasks = db.query(Task).all() # gets all tasks that belong to the current user
             self.write({"tasks": [serialize(t) for t in tasks]}) #serializes the tasks python objects into JSON format and returns them in the response
         finally:
             db.close()    
@@ -66,7 +66,8 @@ class TasksHandler(tornado.web.RequestHandler):
                 description=data.get("description", ""),
                 status=TaskStatus(data.get("status", "todo")),
                 deadline=data.get("deadline"),
-                user_id=user_id
+                user_id=user_id,
+                assignee_id=data.get("assignee_id")
             )
             db.add(task) #adds the new task to the database session
             db.commit() #commits the session to save the new task in the database
@@ -133,6 +134,8 @@ class TaskDetailHandler(tornado.web.RequestHandler):
                 task.status = TaskStatus(data["status"])
             if "deadline" in data:
                 task.deadline = data["deadline"]
+            if "assignee_id" in data:
+                task.assignee_id = data["assignee_id"]  
 
             db.commit() #commits the session to save the updated task in the database  
             db.refresh(task) #refreshes the task object to get the updated data from the database
@@ -174,5 +177,6 @@ def serialize(task):
         "deadline": task.deadline.isoformat() if task.deadline else None,
         "created_at": task.created_at.isoformat() if task.created_at else None, #isoformat converts datetime into string.
         "user_id": task.user_id,
+        "assignee_id": task.assignee_id
     }          
                     
