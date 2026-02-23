@@ -6,6 +6,7 @@ from db import engine, SessionLocal
 from models import Base
 from handlers.auth import RegisterHandler, LoginHandler
 from handlers.tasks import TasksHandler, TaskDetailHandler
+from handlers.users import UsersHandler
 
 # DATABASE_URL = os.environ.get("DATABASE_URL")
 # engine = create_engine(DATABASE_URL)
@@ -26,6 +27,7 @@ def make_app():
         (r"/api/auth/login", LoginHandler),
         (r"/api/tasks", TasksHandler),
         (r"/api/tasks/(\d+)", TaskDetailHandler),
+        (r"/api/users", UsersHandler),
     ], debug=True) #debug mode for better error messages and auto reload during development
 
 if __name__ == "__main__":
