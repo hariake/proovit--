@@ -168,25 +168,23 @@ export default function TaskModal({ task, onClose, onSaved }: {
                         </div>
                     ))}
                 </div>
-            </div>
+                {/* comment input */}
+                <div className="flex gap-2">
+                    <input
+                        className="border rounded p-2 text-sm flex-1"
+                        placeholder="Add a comment..."
+                        value={newComment}
+                        onChange={e => setNewComment(e.target.value)}
+                        onKeyDown={e => e.key === "Enter" && handleAddComment}
+                    />
+                    <button
+                        onClick={handleAddComment}
+                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                        Add Comment
+                        </button>
+                    </div>
+                </div>    
         )}
-
-        {/* comment input */}
-        <div className="flex gap-2">
-            <input
-                className="border rounded p-2 text-sm flex-1"
-                placeholder="Add a comment..."
-                value={newComment}
-                onChange={e => setNewComment(e.target.value)}
-                onKeyDown={e => e.key === "Enter" && handleAddComment}
-            />
-            <button
-                onClick={handleAddComment}
-                className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
-                Add Comment
-                </button>
-            <div/>    
-        </div>    
         <div className="flex justify-between mt-6">
           {isEditing && (
             <button onClick={handleDelete} className="text-red-500 text-sm hover:underline">
