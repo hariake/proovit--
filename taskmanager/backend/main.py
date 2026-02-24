@@ -2,15 +2,15 @@ import os
 import tornado.ioloop
 import tornado.web
 from sqlalchemy import text
-from db import engine, SessionLocal
+from db import engine
 from models import Base
 from handlers.auth import RegisterHandler, LoginHandler
 from handlers.tasks import TasksHandler, TaskDetailHandler
 from handlers.users import UsersHandler
 from handlers.comments import CommentsHandler
+from dotenv import load_dotenv
 
-# DATABASE_URL = os.environ.get("DATABASE_URL")
-# engine = create_engine(DATABASE_URL)
+load_dotenv() #loads enviroment variables from .env file
 Base.metadata.create_all(engine) #creates tables into DB if they dont exist yet.
 
 # Health check handler that does simplest query to the database to check if the connection is working. 

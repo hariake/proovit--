@@ -29,9 +29,10 @@ A Lightweight taskmanager built with Python/Tornado, PostgreSQL and React
    git clone https://github.com/hariake/proovit--.git
    cd proovit--/taskmanager
 ```
-2. Create a `.env` file based on `.env.example`
+2. Create env files
 ```bash
    cp .env.example .env
+   cp backend/.env.example backend/.env
 ```
 3. Start the database
 ```bash
@@ -40,14 +41,7 @@ A Lightweight taskmanager built with Python/Tornado, PostgreSQL and React
 4. Run the backend
 ```bash
 cd backend
-pipi install -r requirements.txt
-# Windows
-$env:DATABASE_URL="postgresql://admin:admin@localhost:5432/taskmanager"
-$env:JWT_SECRET="changemeplease"
-# Mac/Linux
-export DATABASE_URL="postgresql://admin:admin@localhost:5432/taskmanager"
-export JWT_SECRET="changemeplease"
-
+pip install -r requirements.txt
 python -m alembic upgrade head
 python main.py
 ```
