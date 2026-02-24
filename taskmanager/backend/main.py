@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv() #loads enviroment variables from .env file
 import os
 import tornado.ioloop
 import tornado.web
@@ -8,9 +10,7 @@ from handlers.auth import RegisterHandler, LoginHandler
 from handlers.tasks import TasksHandler, TaskDetailHandler
 from handlers.users import UsersHandler
 from handlers.comments import CommentsHandler
-from dotenv import load_dotenv
 
-load_dotenv() #loads enviroment variables from .env file
 Base.metadata.create_all(engine) #creates tables into DB if they dont exist yet.
 
 # Health check handler that does simplest query to the database to check if the connection is working. 
