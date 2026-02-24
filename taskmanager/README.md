@@ -4,11 +4,11 @@ A Lightweight taskmanager built with Python/Tornado, PostgreSQL and React
 
 ## Features
 
- +++ User Registration and login +++
- +++ Create, edit and delete tasks with multiple forms of data +++
- +++ Drag and drop task dashboard +++
- +++ Filter tasks by: My tasks, All tasks, Done tasks +++
- +++ Comment on tasks +++
+ +++ User Registration and login 
+ +++ Create, edit and delete tasks with multiple forms of data 
+ +++ Drag and drop task dashboard 
+ +++ Filter tasks by: My tasks, All tasks, Done tasks 
+ +++ Comment on tasks 
 
  ## Tech Stack
 
@@ -18,8 +18,9 @@ A Lightweight taskmanager built with Python/Tornado, PostgreSQL and React
 
  ## Requirements
 
- +++ Docker +++
- +++ Docker compose +++
+ +++ Docker 
+ +++ Python 3.11+ 
+ +++ Node.js 20+ 
 
  ## How to run the app
 
@@ -32,13 +33,35 @@ A Lightweight taskmanager built with Python/Tornado, PostgreSQL and React
 ```bash
    cp .env.example .env
 ```
-3. Start the app
+3. Start the database
 ```bash
-   docker compose up --build
+   docker compose up db -d
 ```
-4. Open http://localhost in your browser
+4. Run the backend
+```bash
+cd backend
+pipi install -r requirements.txt
+# Windows
+$env:DATABASE_URL="postgresql://admin:admin@localhost:5432/taskmanager"
+$env:JWT_SECRET="changemeplease"
+# Mac/Linux
+export DATABASE_URL="postgresql://admin:admin@localhost:5432/taskmanager"
+export JWT_SECRET="changemeplease"
 
-5. Register an account and start creating tasks
+python -m alembic upgrade head
+python main.py
+```
+
+5. Run the frontend
+```bash
+cd frontend
+npm install
+npm run dev
+``` 
+6. Open the app
+go to http://localhost:5173 in your browser (default vite port, if you have other apps running vite will give you the next port. See the terminal)
+
+7. Register an account and start creating tasks
 
 ## Stop the app
 ```bash
