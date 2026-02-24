@@ -38,7 +38,7 @@ A Lightweight taskmanager built with Python/Tornado, PostgreSQL and React
 ```bash
    docker compose up db -d
 ```
-4. Run the backend
+4. Run the backend  **Note:** On Mac/Linux you may need to use `python3` and `pip3` instead of `python` and `pip`
 ```bash
 cd backend
 pip install -r requirements.txt
