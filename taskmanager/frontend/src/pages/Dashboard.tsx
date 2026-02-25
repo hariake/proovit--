@@ -75,7 +75,7 @@ export default function Dashboard() {
     };
 
      return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 overflow-hidden">
       {/* Navbar */}
       <div className="bg-white shadow px-8 py-4 flex justify-between items-center">
         {toast && (
