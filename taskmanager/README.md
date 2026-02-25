@@ -91,7 +91,7 @@ Response: 200
 ```
 
 - Tasks
-All task endpoints require ```Authorization: Bearer <token>``` header
+- All task endpoints require ```Authorization: Bearer <token>``` header
 
 GET /api/tasks
 Get all tasks.
@@ -156,7 +156,7 @@ Response: 200
 Error 403(forbidden) if not the creator or assignee of the task
 
 - Comments
-All comment endpoints require ```Authorization: Bearer <token>``` header.
+- All comment endpoints require ```Authorization: Bearer <token>``` header.
 
 GET /api/tasks/:id/comments
 Get all comments for a task.
