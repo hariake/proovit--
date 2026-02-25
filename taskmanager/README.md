@@ -54,7 +54,7 @@ docker compose down -v
 
 - Authentication
 
-POST /api/auth/register
+``` POST /api/auth/register ```
 Register a new User
 
 Request Body:
@@ -64,14 +64,14 @@ Request Body:
     "password": "lumi"
 }
 ```
-Response: 201
+```Response: 201```
 ```
 {
     "message": "User registered successfully",
     "user_id" : 1
 }
 ```
-POST /api/auth/login
+``` POST /api/auth/login ```
 Login and get a JWT token
 
 Request Body:
@@ -81,7 +81,7 @@ Request Body:
     "password": "lumi"
 }
 ```
-Response: 200
+``` Response: 200 ```
 ```
 {
     "token": "eyJ...",
@@ -93,9 +93,9 @@ Response: 200
 - Tasks
 - All task endpoints require ```Authorization: Bearer <token>``` header
 
-GET /api/tasks
+``` GET /api/tasks ```
 Get all tasks.
-Response: 200
+``` Response: 200 ```
 ```
 {
     "tasks": [
@@ -113,7 +113,7 @@ Response: 200
 }
 ```
 
-POST /api/tasks
+``` POST /api/tasks ```
 Create a new task
 Request Body:`
 ``` 
@@ -125,13 +125,13 @@ Request Body:`
     "assignee_id": 5
 }
 ```
-Response: 201 - returns the created task object.
+```Response: 201 - returns the created task object. ```
 
-GET /api/tasks/:id
+``` GET /api/tasks/:id ```
 Get a single task by id.
-Response: 200 - returns the task object.
+``` Response: 200 - returns the task object. ``` 
 
-PUT /api/tasks/:id
+``` PUT /api/tasks/:id ```
 Update a task. Only the creator or assignee can update a task.
 Request Body (all the fields are optional for updating):
 ``` 
@@ -143,24 +143,24 @@ Request Body (all the fields are optional for updating):
     "assignee_id" 5
 }
 ```
-response: 200 - returns the updated task object. Error 403(forbiden) if not the creator or assignee of the task
+ ``` response: 200 - returns the updated task object.``` ``` Error 403(forbiden) if not the creator or assignee of the task ```
 
-DELETE /api/tasks/:id
+``` DELETE /api/tasks/:id ```
 Delete a task. Only the creator or assignee can delete a task.
-Response: 200
+``` Response: 200 ``` 
 ```
 {
     "message": "Task deleted successfully"
 }
 ```
-Error 403(forbidden) if not the creator or assignee of the task
+``` Error 403(forbidden) if not the creator or assignee of the task ``` 
 
 - Comments
 - All comment endpoints require ```Authorization: Bearer <token>``` header.
 
-GET /api/tasks/:id/comments
+``` GET /api/tasks/:id/comments ``` 
 Get all comments for a task.
-response: 200
+``` response: 200 ```
 ```
 {
     "comments": [
@@ -175,7 +175,7 @@ response: 200
     ]
 }
 ```
-POST /api/tasks/:id/comments
+``` POST /api/tasks/:id/comments ```
 Add a comment to a task.
 ```
 Request Body:
@@ -183,13 +183,13 @@ Request Body:
     "content": "Bug fixing rules!"
 }
 ```
-Response: 201 - returns the created comment object.
+``` Response: 201 - returns the created comment object. ``` 
 
 - Users
 
-GET /api/users
+``` GET /api/users ```
 Get all users ( neccessary for assignee dropdown menu). Requires authentication
-Response: 200
+``` Response: 200 ```
 ```
 {
     "users": [
