@@ -67,15 +67,27 @@ export default function TaskModal({ task, onClose, onSaved }: {
                 await api.post("/tasks", { title, description, status, deadline: deadline || null }); // If creating new, send POST request to create the task
             }
             onSaved(); // After saving, call onSaved to refresh the task list in the dashboard
-        } catch {
-            setError("Failed to save task"); // If API call fails, show error message
+        } catch (err: any) {
+            if (err.response?.status === 403) {
+                setError("You are not allowed to edit this task"); // If the API returns a 403 error, show a specific error message about permissions
+            } else {
+                setError("Failed to save task"); // For any other errors, show a generic error message
+            }
         }
     };
 
     const handleDelete = async () => { // Handles deleting the task, only available when editing an existing task
         if (!task) return;
-        await api.delete(`/tasks/${task.id}`); // Send DELETE request to delete the task
-        onSaved(); // After deleting, call onSaved to refresh the task list in the dashboard
+        try {
+            await api.delete(`/tasks/${task.id}`); // Send DELETE request to delete the task
+            onSaved(); // After deleting, call onSaved to refresh the task list in the dashboard
+        } catch (err: any) {
+                if (err.response?.status === 403) {
+                    setError("You are not allowed to delete this task"); // If the API returns a 403 error, show a specific error message about permissions
+                } else {
+            setError("Failed to delete task"); // If API call fails, show error message
+            }
+        }
     };
 
     const handleAddComment = async () => { // Handles adding a new comment to the task
@@ -156,25 +168,23 @@ export default function TaskModal({ task, onClose, onSaved }: {
                         </div>
                     ))}
                 </div>
-            </div>
+                {/* comment input */}
+                <div className="flex gap-2">
+                    <input
+                        className="border rounded p-2 text-sm flex-1"
+                        placeholder="Add a comment..."
+                        value={newComment}
+                        onChange={e => setNewComment(e.target.value)}
+                        onKeyDown={e => e.key === "Enter" && handleAddComment}
+                    />
+                    <button
+                        onClick={handleAddComment}
+                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                        Add Comment
+                        </button>
+                    </div>
+                </div>    
         )}
-
-        {/* comment input */}
-        <div className="flex gap-2">
-            <input
-                className="border rounded p-2 text-sm flex-1"
-                placeholder="Add a comment..."
-                value={newComment}
-                onChange={e => setNewComment(e.target.value)}
-                onKeyDown={e => e.key === "Enter" && handleAddComment}
-            />
-            <button
-                onClick={handleAddComment}
-                className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
-                Add Comment
-                </button>
-            <div/>    
-        </div>    
         <div className="flex justify-between mt-6">
           {isEditing && (
             <button onClick={handleDelete} className="text-red-500 text-sm hover:underline">

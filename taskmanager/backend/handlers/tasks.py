@@ -93,11 +93,12 @@ class TaskDetailHandler(tornado.web.RequestHandler):
         
         db = SessionLocal() #opens a new database session
         try:
-            task = db.query(Task).filter(Task.id == task_id, Task.user_id == user_id).first() # gets the task with the specified id that belongs to the current user 
+            task = db.query(Task).filter(Task.id == task_id, (Task.user_id == user_id)).first() # gets the task with the specified id that belongs to the current user.
             if not task:
                 self.set_status(404)
                 self.write({"error": "Task not found"})
                 return  # if the task is not found, return a 404 error with a message indicating that the task is not found
+
             self.write(serialize(task)) #returns the task data in the response
         finally:    
             db.close() #closes the database session        
@@ -119,11 +120,16 @@ class TaskDetailHandler(tornado.web.RequestHandler):
         
         db = SessionLocal() #opens a new database session
         try:
-            task = db.query(Task).filter(Task.id == task_id, Task.user_id == user_id).first() # gets the task with the specified id that belongs to the current user 
+            task = db.query(Task).filter(Task.id == task_id).first() # gets the task with the specified id that belongs to the current user or is assigned to the current user
             if not task:
                 self.set_status(404)
                 self.write({"error": "Task not found"})
                 return  # if the task is not found, return a 404 error with a message indicating that the task is not found
+
+            if task.user_id != user_id and task.assignee_id != user_id:
+                self.set_status(403)
+                self.write({"error": "You are not allowed to update this task"})
+                return  # if the task does not belong to the current user and is not assigned to the current user, return a 403 error with a message indicating that access is forbidden    
             
             # updates the task fields with the new data from the request body only if there is new data for that field.
             if "title" in data:
@@ -153,11 +159,16 @@ class TaskDetailHandler(tornado.web.RequestHandler):
 
         db = SessionLocal() #opens a new database session
         try:
-            task = db.query(Task).filter(Task.id == task_id, Task.user_id == user_id).first() # gets the task with the specified id that belongs to the current user 
+            task = db.query(Task).filter(Task.id == task_id).first() # gets the task with the specified id that belongs to the current user 
             if not task:
                 self.set_status(404)
                 self.write({"error": "Task not found"})
                 return  # if the task is not found, return a 404 error with a message indicating that the task is not found
+            
+            if task.user_id != user_id and task.assignee_id != user_id:
+                self.set_status(403)
+                self.write({"error": "You are not allowed to delete this task"})
+                return  # if the task does not belong to the current user and is not assigned to the current user
             
             db.delete(task) #deletes the task from the database
             db.commit() #commits the session to save the changes in the database
