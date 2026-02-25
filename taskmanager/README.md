@@ -36,9 +36,14 @@ A Lightweight taskmanager built with Python/Tornado, PostgreSQL and React
 ```bash
    docker compose up --build
 ```
-4. Open http://localhost in your browser
+4. Seed the database (optional)
+```bash
+docker compose exec backend python seed.py
+``` 
 
-5. Register an account and start creating tasks
+5. Open http://localhost in your browser
+
+6. Register an account and start creating tasks
 
 ## Stop the app
 ```bash
