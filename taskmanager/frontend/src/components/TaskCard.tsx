@@ -12,6 +12,7 @@ export interface Task {
     assignee_id: number | null;
     user_id: number;
     created_by: string;
+    assignee: string | null;
 }
 // TaskCard component it is draggable and shows task title, description and deadline. 
 export default function TaskCard({ task, onClick }: { task: Task, onClick: (task :Task) => void }) { 
@@ -41,6 +42,8 @@ export default function TaskCard({ task, onClick }: { task: Task, onClick: (task
         <p className="text-xs text-red-400 mt-1">Due: {new Date(task.deadline).toLocaleDateString()}</p>
       )}
       <p className="text-xs text-gray-400 mt-1">Created by: {task.created_by}</p>
+      {task.assignee && ( <p className="text-xs text-gray-400">Assigned to: {task.assignee}</p>
+      )}
     </div>
     <button
       onClick={() => onClick(task)} // When clicking the "Edit" button, calls the onClick function passed as a prop with the task object, this will open the task details modal.

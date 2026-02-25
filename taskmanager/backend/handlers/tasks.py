@@ -190,5 +190,6 @@ def serialize(task):
         "user_id": task.user_id, #the id of the user who created the task
         "assignee_id": task.assignee_id, #if there is an assignee, include the assignee_id in the response, otherwise it will be null
         "created_by": task.user.username, #access the user relationship to get the username of the user who created the task 
+        "assignee": task.assignee.username if task.assignee else None #if there is an assignee, access the assignee relationship to get the username of the user who is assigned to do the task, otherwise it will be null
     }          
                     
