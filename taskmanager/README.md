@@ -52,10 +52,16 @@ cd frontend
 npm install
 npm run dev
 ``` 
-6. Open the app
+
+6. Seed the database (optional)
+```bash
+cd backend
+python seed.py
+```
+7. Open the app
 go to http://localhost:5173 in your browser (default vite port, if you have other apps running vite will give you the next port. See the terminal)
 
-7. Register an account and start creating tasks
+8. Register an account and start creating tasks
 
 ## Stop the app
 ```bash
