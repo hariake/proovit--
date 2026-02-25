@@ -58,32 +58,37 @@ POST /api/auth/register
 Register a new User
 
 Request Body:
+```
 {
     "username" : "joonas",
     "password": "lumi"
 }
-
+```
 Response: 201
+```
 {
     "message": "User registered successfully",
     "user_id" : 1
 }
-
+```
 POST /api/auth/login
 Login and get a JWT token
 
 Request Body:
+```
 {
     "username": "joonas",
     "password": "lumi"
 }
-
+```
 Response: 200
+```
 {
     "token": "eyJ...",
     "user_id": 1,
     "username": "joonas"
 }
+```
 
 - Tasks
 All task endpoints require ```Authorization: Bearer <token>``` header
@@ -91,7 +96,7 @@ All task endpoints require ```Authorization: Bearer <token>``` header
 GET /api/tasks
 Get all tasks.
 Response: 200
-
+```
 {
     "tasks": [
         {
@@ -106,10 +111,12 @@ Response: 200
         }
     ]
 }
+```
 
 POST /api/tasks
 Create a new task
-Request Body:
+Request Body:`
+``` 
 {
     "title:" "Fix the bug",
     "description": "Fix the taskCard dragging bug",
@@ -117,6 +124,7 @@ Request Body:
     "deadline": "2026-03-01",
     "assignee_id": 5
 }
+```
 Response: 201 - returns the created task object.
 
 GET /api/tasks/:id
@@ -126,6 +134,7 @@ Response: 200 - returns the task object.
 PUT /api/tasks/:id
 Update a task. Only the creator or assignee can update a task.
 Request Body (all the fields are optional for updating):
+``` 
 {
     "title": "going to fix the bug",
     "description": "im going to fix the bug assigned to me",
@@ -133,14 +142,17 @@ Request Body (all the fields are optional for updating):
     "deadline": "2026-03-01",
     "assignee_id" 5
 }
+```
 response: 200 - returns the updated task object. Error 403(forbiden) if not the creator or assignee of the task
 
 DELETE /api/tasks/:id
 Delete a task. Only the creator or assignee can delete a task.
 Response: 200
+```
 {
     "message": "Task deleted successfully"
 }
+```
 Error 403(forbidden) if not the creator or assignee of the task
 
 - Comments
@@ -149,7 +161,7 @@ All comment endpoints require ```Authorization: Bearer <token>``` header.
 GET /api/tasks/:id/comments
 Get all comments for a task.
 response: 200
-
+```
 {
     "comments": [
         {
@@ -162,13 +174,15 @@ response: 200
         }
     ]
 }
-
+```
 POST /api/tasks/:id/comments
 Add a comment to a task.
+```
 Request Body:
 {
     "content": "Bug fixing rules!"
 }
+```
 Response: 201 - returns the created comment object.
 
 - Users
@@ -176,6 +190,7 @@ Response: 201 - returns the created comment object.
 GET /api/users
 Get all users ( neccessary for assignee dropdown menu). Requires authentication
 Response: 200
+```
 {
     "users": [
         {
@@ -184,10 +199,10 @@ Response: 200
         }
     ]
 }
-
+```
 
 - All the status codes used
-
+```
 200 - OK
 201 - Created
 304 - Not Modified (data unchanged use cached version)
@@ -196,3 +211,4 @@ Response: 200
 403 - Forbidden (not the creator or assignee)
 404 - Not Found
 500 - Internal Server Error
+```
