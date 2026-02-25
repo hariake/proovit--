@@ -62,9 +62,9 @@ export default function TaskModal({ task, onClose, onSaved }: {
         if (!title.trim()) { setError("Title is required"); return; } // Title is required, if it's empty show error and do not proceed
         try {
             if (isEditing) {
-                await api.put(`/tasks/${task.id}`, { title, description, status, deadline: deadline || null }); // If editing, send PUT request to update the task
+                await api.put(`/tasks/${task.id}`, { title, description, status, deadline: deadline || null, assignee_id: assigneeId }); // If editing, send PUT request to update the task
             } else {
-                await api.post("/tasks", { title, description, status, deadline: deadline || null }); // If creating new, send POST request to create the task
+                await api.post("/tasks", { title, description, status, deadline: deadline || null, assignee_id: assigneeId }); // If creating new, send POST request to create the task
             }
             onSaved(); // After saving, call onSaved to refresh the task list in the dashboard
         } catch (err: any) {
