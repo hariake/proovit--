@@ -19,7 +19,7 @@ export default function TaskCard({ task, onClick }: { task: Task, onClick: (task
     const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: task.id });
 
     // Applies the drag transform and transition to the card's style, making it move smoothly when dragged.
-    const style = {
+    const style: React.CSSProperties = {
         transform: CSS.Translate.toString(transform),
         opacity : transform ? 0.7 : 1, // Makes the card semi-transparent while dragging
         width: "100%", // Makes the card take the full width of the column
