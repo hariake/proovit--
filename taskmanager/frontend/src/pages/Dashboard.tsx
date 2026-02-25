@@ -32,6 +32,13 @@ export default function Dashboard() {
         return true; // If filter is 'all', show all tasks
     });
 
+    const [toast, setToast] = useState<string | null>(null); // State for showing temporary toast messages, will be used to show dragging error message.
+
+    const showToast = (message: string) => { // Function to show a toast message for 2 seconds
+        setToast(message);
+        setTimeout(() => setToast(null), 2000);
+    }
+
     const handleDragEnd = async (event: DragEndEvent) => { // Handles end of drag-and-drop action
         const { active, over } = event;
         if (!over) return; // If not dropped over a valid droppable area, do nothing
@@ -48,8 +55,12 @@ export default function Dashboard() {
 
         try {
             await api.put(`/tasks/${taskId}`, { status: newStatus }); // Sends API request to update the task's status in backend.
-        } catch {
+        } catch (err: any) {
             fetchTasks(); // If API call fails, refetch tasks to revert the optimistic update and show the correct status
+            if (err.response?.status === 403) {
+                showToast("You are not allowed to move this task"); // If the API returns a 403 error, show a specific error message about permissions
+            }
+
         }
     };
 
@@ -67,6 +78,11 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
       <div className="bg-white shadow px-8 py-4 flex justify-between items-center">
+        {toast && (
+            <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded shadow-lg z-50 text-sm transition-opacity">
+                {toast}
+            </div>
+        )}
         <h1 className="text-xl font-bold">Task Manager</h1>
         <div> 
           {/* Filters */}
